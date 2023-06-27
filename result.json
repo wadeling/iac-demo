@@ -1,0 +1,863 @@
+[
+  {
+    "Target": "Dockerfile",
+    "Class": "config",
+    "Type": "dockerfile",
+    "Misconfigurations": [
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS002",
+        "AVDID": "AVD-DS-0002",
+        "Title": "Image user should not be 'root'",
+        "Description": "Running containers with 'root' user can lead to a container escape situation. It is a best practice to run containers as non-root users, which can be done by adding a 'USER' statement to the Dockerfile.",
+        "Message": "Specify at least 1 USER command in Dockerfile with non-root user as argument",
+        "Namespace": "builtin.dockerfile.DS002",
+        "Query": "data.builtin.dockerfile.DS002.deny",
+        "Resolution": "Add 'USER \u003cnon root user name\u003e' line to the Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds002",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+          "https://avd.aquasec.com/misconfig/ds002"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS005",
+        "AVDID": "AVD-DS-0005",
+        "Title": "ADD instead of COPY",
+        "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+        "Message": "Consider using 'COPY clamav/clamav.tgz /var/lib/' command instead of 'ADD clamav/clamav.tgz /var/lib/'",
+        "Namespace": "builtin.dockerfile.DS005",
+        "Query": "data.builtin.dockerfile.DS005.deny",
+        "Resolution": "Use COPY instead of ADD",
+        "Severity": "LOW",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds005",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#add",
+          "https://avd.aquasec.com/misconfig/ds005"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "StartLine": 22,
+          "EndLine": 22,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 22,
+                "Content": "ADD clamav/clamav.tgz /var/lib/",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": true,
+                "LastCause": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS005",
+        "AVDID": "AVD-DS-0005",
+        "Title": "ADD instead of COPY",
+        "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+        "Message": "Consider using 'COPY configs/myscanner/entrypoint.sh /entrypoint.sh' command instead of 'ADD configs/myscanner/entrypoint.sh /entrypoint.sh'",
+        "Namespace": "builtin.dockerfile.DS005",
+        "Query": "data.builtin.dockerfile.DS005.deny",
+        "Resolution": "Use COPY instead of ADD",
+        "Severity": "LOW",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds005",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#add",
+          "https://avd.aquasec.com/misconfig/ds005"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "StartLine": 24,
+          "EndLine": 24,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 24,
+                "Content": "ADD configs/myscanner/entrypoint.sh /entrypoint.sh",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": true,
+                "LastCause": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS005",
+        "AVDID": "AVD-DS-0005",
+        "Title": "ADD instead of COPY",
+        "Description": "You should use COPY instead of ADD unless you want to extract a tar file. Note that an ADD command will extract a tar file, which adds the risk of Zip-based vulnerabilities. Accordingly, it is advised to use a COPY command, which does not extract tar files.",
+        "Message": "Consider using 'COPY test.tgz /usr/local' command instead of 'ADD test.tgz /usr/local'",
+        "Namespace": "builtin.dockerfile.DS005",
+        "Query": "data.builtin.dockerfile.DS005.deny",
+        "Resolution": "Use COPY instead of ADD",
+        "Severity": "LOW",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds005",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#add",
+          "https://avd.aquasec.com/misconfig/ds005"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "StartLine": 18,
+          "EndLine": 18,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 18,
+                "Content": "ADD test.tgz /usr/local",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": true,
+                "LastCause": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS026",
+        "AVDID": "AVD-DS-0026",
+        "Title": "No HEALTHCHECK defined",
+        "Description": "You should add HEALTHCHECK instruction in your docker container images to perform the health check on running containers.",
+        "Message": "Add HEALTHCHECK instruction in your Dockerfile",
+        "Namespace": "builtin.dockerfile.DS026",
+        "Query": "data.builtin.dockerfile.DS026.deny",
+        "Resolution": "Add HEALTHCHECK instruction in Dockerfile",
+        "Severity": "LOW",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds026",
+        "References": [
+          "https://blog.aquasec.com/docker-security-best-practices",
+          "https://avd.aquasec.com/misconfig/ds026"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS029",
+        "AVDID": "AVD-DS-0029",
+        "Title": "'apt-get' missing '--no-install-recommends'",
+        "Description": "'apt-get' install should use '--no-install-recommends' to minimize image size.",
+        "Message": "'--no-install-recommends' flag is missed: 'sed -i \"s!archive.ubuntu.com/!mirrors.aliyun.com/!g\" /etc/apt/sources.list     \u0026\u0026 sed -i \"s!ports.ubuntu.com/!mirrors.aliyun.com/!g\" /etc/apt/sources.list     \u0026\u0026 apt-get update -y     \u0026\u0026 apt-get full-upgrade -y     \u0026\u0026 apt-get install -y wget     \u0026\u0026 apt-get install -y libclamav-dev zip unzip     \u0026\u0026 apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common iptables     \u0026\u0026 curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | apt-key add -     \u0026\u0026 add-apt-repository \"deb [arch=$(dpkg --print-architecture)] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable\"     \u0026\u0026 apt-get install -y  docker-ce-cli     \u0026\u0026 apt-get full-upgrade -y     \u0026\u0026 apt-get clean     \u0026\u0026 rm -rf /var/lib/apt/lists/*'",
+        "Namespace": "builtin.dockerfile.DS029",
+        "Query": "data.builtin.dockerfile.DS029.deny",
+        "Resolution": "Add '--no-install-recommends' flag to 'apt-get'",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds029",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+          "https://avd.aquasec.com/misconfig/ds029"
+        ],
+        "Status": "FAIL",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "StartLine": 4,
+          "EndLine": 16,
+          "Code": {
+            "Lines": [
+              {
+                "Number": 4,
+                "Content": "RUN sed -i \"s!archive.ubuntu.com/!mirrors.aliyun.com/!g\" /etc/apt/sources.list \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": true,
+                "LastCause": false
+              },
+              {
+                "Number": 5,
+                "Content": "    \u0026\u0026 sed -i \"s!ports.ubuntu.com/!mirrors.aliyun.com/!g\" /etc/apt/sources.list \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 6,
+                "Content": "    \u0026\u0026 apt-get update -y \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 7,
+                "Content": "    \u0026\u0026 apt-get full-upgrade -y \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 8,
+                "Content": "    \u0026\u0026 apt-get install -y wget \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 9,
+                "Content": "    \u0026\u0026 apt-get install -y libclamav-dev zip unzip \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 10,
+                "Content": "    \u0026\u0026 apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common iptables \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 11,
+                "Content": "    \u0026\u0026 curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | apt-key add - \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": false
+              },
+              {
+                "Number": 12,
+                "Content": "    \u0026\u0026 add-apt-repository \"deb [arch=$(dpkg --print-architecture)] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu $(lsb_release -cs) stable\" \\",
+                "IsCause": true,
+                "Annotation": "",
+                "Truncated": false,
+                "FirstCause": false,
+                "LastCause": true
+              },
+              {
+                "Number": 13,
+                "Content": "",
+                "IsCause": false,
+                "Annotation": "",
+                "Truncated": true,
+                "FirstCause": false,
+                "LastCause": false
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS001",
+        "AVDID": "AVD-DS-0001",
+        "Title": "':latest' tag used",
+        "Description": "When using a 'FROM' statement you should use a specific tag to avoid uncontrolled behavior when the image is updated.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS001",
+        "Query": "data.builtin.dockerfile.DS001.deny",
+        "Resolution": "Add a tag to the image in the 'FROM' statement",
+        "Severity": "MEDIUM",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds001",
+        "References": [
+          "https://avd.aquasec.com/misconfig/ds001"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS004",
+        "AVDID": "AVD-DS-0004",
+        "Title": "Port 22 exposed",
+        "Description": "Exposing port 22 might allow users to SSH into the container.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS004",
+        "Query": "data.builtin.dockerfile.DS004.deny",
+        "Resolution": "Remove 'EXPOSE 22' statement from the Dockerfile",
+        "Severity": "MEDIUM",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds004",
+        "References": [
+          "https://avd.aquasec.com/misconfig/ds004"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS006",
+        "AVDID": "AVD-DS-0006",
+        "Title": "COPY '--from' referring to the current image",
+        "Description": "COPY '--from' should not mention the current FROM alias, since it is impossible to copy from itself.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS006",
+        "Query": "data.builtin.dockerfile.DS006.deny",
+        "Resolution": "Change the '--from' so that it will not refer to itself",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds006",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/multistage-build/",
+          "https://avd.aquasec.com/misconfig/ds006"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS007",
+        "AVDID": "AVD-DS-0007",
+        "Title": "Multiple ENTRYPOINT instructions listed",
+        "Description": "There can only be one ENTRYPOINT instruction in a Dockerfile. Only the last ENTRYPOINT instruction in the Dockerfile will have an effect.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS007",
+        "Query": "data.builtin.dockerfile.DS007.deny",
+        "Resolution": "Remove unnecessary ENTRYPOINT instruction.",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds007",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#entrypoint",
+          "https://avd.aquasec.com/misconfig/ds007"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS008",
+        "AVDID": "AVD-DS-0008",
+        "Title": "Exposed port out of range",
+        "Description": "UNIX ports outside the range 0-65535 are exposed.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS008",
+        "Query": "data.builtin.dockerfile.DS008.deny",
+        "Resolution": "Use port number within range",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds008",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#expose",
+          "https://avd.aquasec.com/misconfig/ds008"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS009",
+        "AVDID": "AVD-DS-0009",
+        "Title": "WORKDIR path not absolute",
+        "Description": "For clarity and reliability, you should always use absolute paths for your WORKDIR.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS009",
+        "Query": "data.builtin.dockerfile.DS009.deny",
+        "Resolution": "Use absolute paths for your WORKDIR",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds009",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#workdir",
+          "https://avd.aquasec.com/misconfig/ds009"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS010",
+        "AVDID": "AVD-DS-0010",
+        "Title": "RUN using 'sudo'",
+        "Description": "Avoid using 'RUN' with 'sudo' commands, as it can lead to unpredictable behavior.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS010",
+        "Query": "data.builtin.dockerfile.DS010.deny",
+        "Resolution": "Don't use sudo",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds010",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#run",
+          "https://avd.aquasec.com/misconfig/ds010"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS011",
+        "AVDID": "AVD-DS-0011",
+        "Title": "COPY with more than two arguments not ending with slash",
+        "Description": "When a COPY command has more than two arguments, the last one should end with a slash.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS011",
+        "Query": "data.builtin.dockerfile.DS011.deny",
+        "Resolution": "Add slash to last COPY argument",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds011",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#copy",
+          "https://avd.aquasec.com/misconfig/ds011"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS012",
+        "AVDID": "AVD-DS-0012",
+        "Title": "Duplicate aliases defined in different FROMs",
+        "Description": "Different FROMs can't have the same alias defined.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS012",
+        "Query": "data.builtin.dockerfile.DS012.deny",
+        "Resolution": "Change aliases to make them different",
+        "Severity": "CRITICAL",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds012",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/multistage-build/",
+          "https://avd.aquasec.com/misconfig/ds012"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS013",
+        "AVDID": "AVD-DS-0013",
+        "Title": "'RUN cd ...' to change directory",
+        "Description": "Use WORKDIR instead of proliferating instructions like 'RUN cd … \u0026\u0026 do-something', which are hard to read, troubleshoot, and maintain.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS013",
+        "Query": "data.builtin.dockerfile.DS013.deny",
+        "Resolution": "Use WORKDIR to change directory",
+        "Severity": "MEDIUM",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds013",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#workdir",
+          "https://avd.aquasec.com/misconfig/ds013"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS014",
+        "AVDID": "AVD-DS-0014",
+        "Title": "RUN using 'wget' and 'curl'",
+        "Description": "Avoid using both 'wget' and 'curl' since these tools have the same effect.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS014",
+        "Query": "data.builtin.dockerfile.DS014.deny",
+        "Resolution": "Pick one util, either 'wget' or 'curl'",
+        "Severity": "LOW",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds014",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run",
+          "https://avd.aquasec.com/misconfig/ds014"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS015",
+        "AVDID": "AVD-DS-0015",
+        "Title": "'yum clean all' missing",
+        "Description": "You should use 'yum clean all' after using a 'yum install' command to clean package cached data and reduce image size.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS015",
+        "Query": "data.builtin.dockerfile.DS015.deny",
+        "Resolution": "Add 'yum clean all' to Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds015",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run",
+          "https://avd.aquasec.com/misconfig/ds015"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS016",
+        "AVDID": "AVD-DS-0016",
+        "Title": "Multiple CMD instructions listed",
+        "Description": "There can only be one CMD instruction in a Dockerfile. If you list more than one CMD then only the last CMD will take effect.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS016",
+        "Query": "data.builtin.dockerfile.DS016.deny",
+        "Resolution": "Dockerfile should only have one CMD instruction. Remove all the other CMD instructions",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds016",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#cmd",
+          "https://avd.aquasec.com/misconfig/ds016"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS017",
+        "AVDID": "AVD-DS-0017",
+        "Title": "'RUN \u003cpackage-manager\u003e update' instruction alone",
+        "Description": "The instruction 'RUN \u003cpackage-manager\u003e update' should always be followed by '\u003cpackage-manager\u003e install' in the same RUN statement.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS017",
+        "Query": "data.builtin.dockerfile.DS017.deny",
+        "Resolution": "Combine '\u003cpackage-manager\u003e update' and '\u003cpackage-manager\u003e install' instructions to single one",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds017",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run",
+          "https://avd.aquasec.com/misconfig/ds017"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS019",
+        "AVDID": "AVD-DS-0019",
+        "Title": "'dnf clean all' missing",
+        "Description": "Cached package data should be cleaned after installation to reduce image size.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS019",
+        "Query": "data.builtin.dockerfile.DS019.deny",
+        "Resolution": "Add 'dnf clean all' to Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds019",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+          "https://avd.aquasec.com/misconfig/ds019"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS020",
+        "AVDID": "AVD-DS-0020",
+        "Title": "'zypper clean' missing",
+        "Description": "The layer and image size should be reduced by deleting unneeded caches after running zypper.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS020",
+        "Query": "data.builtin.dockerfile.DS020.deny",
+        "Resolution": "Add 'zypper clean' to Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds020",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#run",
+          "https://avd.aquasec.com/misconfig/ds020"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS021",
+        "AVDID": "AVD-DS-0021",
+        "Title": "'apt-get' missing '-y' to avoid manual input",
+        "Description": "'apt-get' calls should use the flag '-y' to avoid manual user input.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS021",
+        "Query": "data.builtin.dockerfile.DS021.deny",
+        "Resolution": "Add '-y' flag to 'apt-get'",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds021",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#run",
+          "https://avd.aquasec.com/misconfig/ds021"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS022",
+        "AVDID": "AVD-DS-0022",
+        "Title": "Deprecated MAINTAINER used",
+        "Description": "MAINTAINER has been deprecated since Docker 1.13.0.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS022",
+        "Query": "data.builtin.dockerfile.DS022.deny",
+        "Resolution": "Use LABEL instead of MAINTAINER",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds022",
+        "References": [
+          "https://docs.docker.com/engine/deprecated/#maintainer-in-dockerfile",
+          "https://avd.aquasec.com/misconfig/ds022"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS023",
+        "AVDID": "AVD-DS-0023",
+        "Title": "Multiple HEALTHCHECK defined",
+        "Description": "Providing more than one HEALTHCHECK instruction per stage is confusing and error-prone.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS023",
+        "Query": "data.builtin.dockerfile.DS023.deny",
+        "Resolution": "One HEALTHCHECK instruction must remain in Dockerfile. Remove all other instructions.",
+        "Severity": "MEDIUM",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds023",
+        "References": [
+          "https://docs.docker.com/engine/reference/builder/#healthcheck",
+          "https://avd.aquasec.com/misconfig/ds023"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS024",
+        "AVDID": "AVD-DS-0024",
+        "Title": "'apt-get dist-upgrade' used",
+        "Description": "'apt-get dist-upgrade' upgrades a major version so it doesn't make more sense in Dockerfile.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS024",
+        "Query": "data.builtin.dockerfile.DS024.deny",
+        "Resolution": "Just use different image",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds024",
+        "References": [
+          "https://avd.aquasec.com/misconfig/ds024"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS025",
+        "AVDID": "AVD-DS-0025",
+        "Title": "'apk add' is missing '--no-cache'",
+        "Description": "You should use 'apk add' with '--no-cache' to clean package cached data and reduce image size.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS025",
+        "Query": "data.builtin.dockerfile.DS025.deny",
+        "Resolution": "Add '--no-cache' to 'apk add' in Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds025",
+        "References": [
+          "https://github.com/gliderlabs/docker-alpine/blob/master/docs/usage.md#disabling-cache",
+          "https://avd.aquasec.com/misconfig/ds025"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      },
+      {
+        "Type": "DockerFile Security Check",
+        "ID": "DS027",
+        "AVDID": "AVD-DS-0027",
+        "Title": "'microdnf clean all' missing",
+        "Description": "Cached package data should be cleaned after installation to reduce image size.",
+        "Message": "No issues found",
+        "Namespace": "builtin.dockerfile.DS027",
+        "Query": "data.builtin.dockerfile.DS027.deny",
+        "Resolution": "Add 'microdnf clean all' to Dockerfile",
+        "Severity": "HIGH",
+        "PrimaryURL": "https://avd.aquasec.com/misconfig/ds027",
+        "References": [
+          "https://docs.docker.com/develop/develop-images/dockerfile_best-practices/",
+          "https://avd.aquasec.com/misconfig/ds027"
+        ],
+        "Status": "PASS",
+        "Layer": {},
+        "CauseMetadata": {
+          "Provider": "Dockerfile",
+          "Service": "general",
+          "Code": {
+            "Lines": null
+          }
+        }
+      }
+    ]
+  }
+]
