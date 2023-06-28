@@ -74,6 +74,23 @@ func singleFileScan() (scan.Results,error) {
 	scanner := dockerfile.NewScanner(options.ScannerWithEmbeddedPolicies(true))
 	memfs := memoryfs.New()
 
+	testDataPath := "./testdata/Dockerfile"
+	err := addSingleFileToMemFs(memfs, testDataPath)
+	if err != nil {
+		log.Printf("failed to add data files to memfs.%v", err)
+		return nil, err
+	}
+	results, err := scanner.ScanFS(context.Background(), memfs, ".")
+	if err != nil {
+		log.Printf("scan fs err:%v", err)
+		return nil, err
+	}
+	return results, nil
+}
+func singleDirScan() (scan.Results,error) {
+	scanner := dockerfile.NewScanner(options.ScannerWithEmbeddedPolicies(true))
+	memfs := memoryfs.New()
+
 	testDataPath, err := filepath.Abs("./testdata")
 	log.Printf("test data path:%v,base %v", testDataPath, filepath.Base(testDataPath))
 	err = addFilesToMemFS(memfs, false, testDataPath)
@@ -116,6 +133,21 @@ func memFsScan() (scan.Results, error) {
 		return nil, err
 	}
 	return results, nil
+}
+
+func addSingleFileToMemFs(memfs *memoryfs.FS,fileName string) error {
+	data, err := os.ReadFile(fileName)
+	if err != nil {
+		log.Printf("read file err %v", err)
+		return err
+	}
+	
+	baseFile := filepath.Base(fileName)
+	if err := memfs.WriteFile(baseFile, data, 0o644); err != nil {
+		log.Printf("failed to write file:%v",baseFile)
+		return err	
+	}
+	return nil
 }
 
 func addFilesToMemFS(memfs *memoryfs.FS, typePolicy bool, folderName string) error {
