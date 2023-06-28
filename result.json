@@ -1,6 +1,6 @@
 [
   {
-    "Target": "Dockerfile",
+    "Target": "testdata/Dockerfile",
     "Class": "config",
     "Type": "dockerfile",
     "Misconfigurations": [

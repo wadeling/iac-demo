@@ -24,11 +24,17 @@ import (
 func main() {
 	log.Println("start")
 
-	results, err := localFsScan()
+	//results, err := localFsScan()
+	//if err != nil {
+	//	log.Printf("local fs scan err:%v", err)
+	//	return
+	//}
+	results,err := singleFileScan()
 	if err != nil {
-		log.Printf("local fs scan err:%v", err)
+		log.Printf("single fs scan err:%v", err)
 		return
 	}
+	
 	//results, err := memFsScan()
 	//if err != nil {
 	//	log.Printf("memfs scan err.%v", err)
@@ -64,6 +70,25 @@ func localFsScan() (scan.Results, error) {
 	return results, err
 }
 
+func singleFileScan() (scan.Results,error) {
+	scanner := dockerfile.NewScanner(options.ScannerWithEmbeddedPolicies(true))
+	memfs := memoryfs.New()
+
+	testDataPath, err := filepath.Abs("./testdata")
+	log.Printf("test data path:%v,base %v", testDataPath, filepath.Base(testDataPath))
+	err = addFilesToMemFS(memfs, false, testDataPath)
+	if err != nil {
+		log.Printf("failed to add data files to memfs.%v", err)
+		return nil, err
+	}
+	results, err := scanner.ScanFS(context.Background(), memfs, filepath.Base(testDataPath))
+	if err != nil {
+		log.Printf("scan fs err:%v", err)
+		return nil, err
+	}
+	return results, nil
+}
+
 func memFsScan() (scan.Results, error) {
 	policiesPath, err := filepath.Abs("./rules")
 	log.Printf("polic abs path:%v,base %v", policiesPath, filepath.Base(policiesPath))
@@ -95,9 +120,13 @@ func memFsScan() (scan.Results, error) {
 
 func addFilesToMemFS(memfs *memoryfs.FS, typePolicy bool, folderName string) error {
 	base := filepath.Base(folderName)
+	log.Printf("add files to mem fs. base file:%v,folder name:%v",base,folderName)
+	
 	if err := memfs.MkdirAll(base, 0o700); err != nil {
 		return err
 	}
+	log.Printf("memfs mkdir ok")
+	
 	err := filepath.Walk(filepath.FromSlash(folderName),
 		func(fpath string, info os.FileInfo, err error) error {
 			if err != nil {
@@ -118,7 +147,7 @@ func addFilesToMemFS(memfs *memoryfs.FS, typePolicy bool, folderName string) err
 				return err
 			}
 			fileName := getFileName(fpath, info, typePolicy)
-			log.Printf("write file %v to memfs.fpath %v,info %v", fileName, fpath, info.Name())
+			log.Printf("write file: %v to memfs.innerPath %v,fpath %v,info %v", fileName,path.Join(base,fileName), fpath, info.Name())
 			if err := memfs.WriteFile(path.Join(base, fileName), data, 0o644); err != nil {
 				log.Printf("memfs write file err:%v,%v", err, fileName)
 				return err
