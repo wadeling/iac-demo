@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/aquasecurity/defsec/pkg/scan"
 	"github.com/aquasecurity/defsec/pkg/scanners/dockerfile"
+	"github.com/aquasecurity/defsec/pkg/scanners/kubernetes"
 	"github.com/aquasecurity/defsec/pkg/scanners/options"
 	dbTypes "github.com/aquasecurity/trivy-db/pkg/types"
 	ftypes "github.com/aquasecurity/trivy/pkg/fanal/types"
@@ -29,11 +30,11 @@ func main() {
 	//	log.Printf("local fs scan err:%v", err)
 	//	return
 	//}
-	results,err := singleFileScan()
-	if err != nil {
-		log.Printf("single fs scan err:%v", err)
-		return
-	}
+	//results,err := singleFileScan()
+	//if err != nil {
+	//	log.Printf("single fs scan err:%v", err)
+	//	return
+	//}
 	
 	//results, err := memFsScan()
 	//if err != nil {
@@ -41,8 +42,15 @@ func main() {
 	//	return
 	//}
 	//log.Printf("results len: %v", len(results))
+	
+	results,err := singleK8sYamlScan()
+	if err != nil {
+		log.Printf("single yaml scan err:%v",err)
+		return 
+	}
 
-	misconfs := ResultsToMisconf(ftypes.Dockerfile, "DockerFile", results)
+	//misconfs := ResultsToMisconf(ftypes.Dockerfile, "DockerFile", results)
+	misconfs := ResultsToMisconf(ftypes.Kubernetes, "Kubernetes", results)
 
 	for _, misconf := range misconfs {
 		sort.Sort(misconf.Successes)
@@ -60,6 +68,24 @@ func main() {
 		return
 	}
 	log.Printf("end")
+}
+
+func singleK8sYamlScan() (scan.Results,error) {
+	scanner := kubernetes.NewScanner(options.ScannerWithEmbeddedPolicies(true))
+	memfs := memoryfs.New()
+	testDataPath := "./testdata/deploy.yaml"
+	err := addSingleFileToMemFs(memfs, testDataPath)
+	if err != nil {
+		log.Printf("failed to add data files to memfs.%v", err)
+		return nil, err
+	}
+	results, err := scanner.ScanFS(context.Background(), memfs, ".")
+	if err != nil {
+		log.Printf("scan fs err:%v", err)
+		return nil, err
+	}
+	//log.Printf("yaml results:%v",results)
+	return results, nil
 }
 
 func localFsScan() (scan.Results, error) {
